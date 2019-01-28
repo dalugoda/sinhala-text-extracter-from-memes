@@ -4,6 +4,26 @@ import os
 import matplotlib.pyplot as plt
 
 
+def resize_character(image):
+    height, width = image.shape
+
+    left, right, top, bottom = 0, 0, 5, 5
+
+    if width < 50:
+        difference = 50 - width
+
+        left = difference // 2
+        right = difference // 2
+
+        if difference % 2 == 1:
+            left = left + 1
+
+    image = cv2.copyMakeBorder(image, top=top, bottom=bottom, left=left, right=right, borderType=cv2.BORDER_CONSTANT,
+                                   value=[255, 255, 255])
+
+    return image
+
+
 def character_segment(base_path, character_segments_path, image_name):
     print(image_name)
     base_image_name_array = image_name.split('.')
@@ -48,7 +68,7 @@ def character_segment(base_path, character_segments_path, image_name):
             if line_segment_sum[x] < 800:
                 line_segment_sum[x] = 0
 
-        print(line_segment_sum)
+        # print(line_segment_sum)
 
         # identify rising points and falling points
         cords = []
@@ -133,6 +153,7 @@ def character_segment(base_path, character_segments_path, image_name):
         for x in range(len(arranged_pairs)):
             pair = arranged_pairs[x]
             roi = line_segment[0:H, pair[0]:pair[1]]
+            roi = resize_character(roi)
 
             cv2.line(line_segment_original, (pair[0], 0), (pair[0], H), (0, 0, 255), 1)
             cv2.line(line_segment_original, (pair[1], 0), (pair[1], H), (255, 0, 0), 1)
