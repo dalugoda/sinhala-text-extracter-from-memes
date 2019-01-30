@@ -7,7 +7,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 def get_result(image):
     # classes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
-    classes = np.arange(start=1, stop=239).astype(str).tolist()
+    classes = np.arange(start=1, stop=229).astype(str).tolist()
 
     letters = {
         "1": '\u0D85',
@@ -60,8 +60,7 @@ def get_result(image):
     # Let's feed the images to the input placeholders
     x = graph.get_tensor_by_name("x:0")
     y_true = graph.get_tensor_by_name("y_true:0")
-    y_test_images = np.zeros((238, 238))
-    print(y_test_images)
+    y_test_images = np.zeros((100, 228))
 
     # Creating the feed_dict that is required to be fed to calculate y_pred
     feed_dict_testing = {x: x_batch, y_true: y_test_images}
@@ -80,8 +79,13 @@ def get_result(image):
     # #print('Second Maximum probability class:', letters[str(classes[result.argmax()])])
     # second_class = letters[str(classes[result.argmax()])]
     # tf.reset_default_graph()
+    print(first_class)
     return first_prob, first_class
 
 
-image = cv2.imread("test/step_11_character_segment/segmented/15326324_602121043306380_4760328155269509500_n/26_0.jpg", 0)
-print(get_result(image))
+image = cv2.imread("test/step_11_character_segment/segmented/15380494_603611959823955_4044190123010011893_n/1_0.png", 0)
+first_prob, first_class = get_result(image)
+pred = cv2.imread("cnn_dataset/"+str(first_class)+"/"+str(first_class)+"_1.jpg")
+cv2.imshow('pred', pred)
+cv2.imshow('test', image)
+cv2.waitKey(0)

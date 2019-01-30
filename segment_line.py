@@ -5,6 +5,38 @@ import matplotlib.transforms
 import os
 
 
+def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
+    # initialize the dimensions of the image to be resized and
+    # grab the image size
+    dim = None
+    (h, w) = image.shape[:2]
+
+    # if both the width and height are None, then return the
+    # original image
+    if width is None and height is None:
+        return image
+
+    # check to see if the width is None
+    if width is None:
+        # calculate the ratio of the height and construct the
+        # dimensions
+        r = height / float(h)
+        dim = (int(w * r), height)
+
+    # otherwise, the height is None
+    else:
+        # calculate the ratio of the width and construct the
+        # dimensions
+        r = width / float(w)
+        dim = (width, int(h * r))
+
+    # resize the image
+    resized = cv2.resize(image, dim, interpolation=inter)
+
+    # return the resized image
+    return resized
+
+
 def line_segment(base_path, test_path, pre_processed_path, image_name):
 
     image_pre_processed = cv2.imread(base_path + pre_processed_path + image_name, 0)
@@ -43,7 +75,7 @@ def line_segment(base_path, test_path, pre_processed_path, image_name):
     # transform graph
     base = plt.gca().transData
     rot = matplotlib.transforms.Affine2D().rotate_deg(270)
-    plt.plot(img_row_sum, transform=rot + base)
+    # plt.plot(img_row_sum, transform=rot + base)
     # plt.show()
 
     H, W = image_pre_processed.shape[:2]
@@ -94,6 +126,7 @@ def line_segment(base_path, test_path, pre_processed_path, image_name):
             cv2.line(image_original, (0, pair[0]), (W, pair[0]), (0, 0, 255), 1)
             cv2.line(image_original, (0, pair[1]), (W, pair[1]), (0, 255, 0), 1)
 
+            roi = image_resize(roi, height=40)
             cv2.imwrite(os.path.join(base_path + line_segmented_path, str(i) + '.' + image_name_array[1]), roi)
 
     cv2.imshow('Segmented Image', image_original)

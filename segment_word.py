@@ -64,12 +64,15 @@ def word_segment(base_path, line_segments_path, image_name):
     for i in range(len(sorted_line_list)):
 
         line_segment_original = cv2.imread(path + str(sorted_line_list[i]) + '.' + base_image_name_array[1])
-        line_segment_original = image_resize(line_segment_original, height=40)
+        # line_segment_original = image_resize(line_segment_original, height=40)
         line_segment = cv2.imread(path + str(sorted_line_list[i]) + '.' + base_image_name_array[1], 0)
-        line_segment = image_resize(line_segment, height=40)
+        # line_segment = image_resize(line_segment, height=40)
 
         line_segment = 255 - line_segment
         line_segment_sum = np.sum(line_segment, axis=0).tolist()
+
+        # print(line_segment_sum)
+
 
         # ignore counts less than 100
         for x in range(len(line_segment_sum)):
@@ -93,6 +96,8 @@ def word_segment(base_path, line_segments_path, image_name):
 
         H, W = line_segment.shape[:2]
 
+        # print(cords)
+
         differences = []
 
         # get line differences
@@ -103,23 +108,26 @@ def word_segment(base_path, line_segments_path, image_name):
             difference = next_value - current_value
 
             # filter values
-            if 10 < difference < 120:
+            if 10 < difference < 250:
                 differences.append(difference)
             else:
                 differences.append(0)
+
+        # print(differences)
 
         # detect pairs
         pairs = []
         for x in range(len(differences)):
 
             pair = []
-            if 10 < differences[x] < 80:
+            if 10 < differences[x] < 250:
                 pair.append(cords[x])
                 pair.append(cords[x + 1])
                 pairs.append(pair)
 
         line_segment = 255 - line_segment
 
+        # print(pairs)
         # detect word spaces
         if len(pairs) > 0:
             word_cords = [pairs[0][0]]
@@ -148,6 +156,7 @@ def word_segment(base_path, line_segments_path, image_name):
         else:
             word_cords.append(W)
 
+        # print(word_cords)
         # arrange new pairs
         arranged_pairs = []
         for x in range(0, len(word_cords), 2):
@@ -165,7 +174,7 @@ def word_segment(base_path, line_segments_path, image_name):
             cv2.imwrite(os.path.join(base_path + word_segmented_path, str(i+1) + '_' + str(x+1) + '.' + base_image_name_array[1]), roi)
 
         cv2.imwrite(os.path.join(base_path + word_segmented_path + (base_image_name_array[0] + str(i+1) + '.' + base_image_name_array[1])), line_segment_original)
-        # cv2.imshow('segmented', line_segment_original)
+        # cv2.imshow('segmented_words', line_segment_original)
         # plt.plot(line_segment_sum)
         # plt.show()
         # cv2.waitKey(0)

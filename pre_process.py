@@ -3,6 +3,34 @@ import numpy as np
 import os
 
 
+def crop_image_border(image):
+
+    image_original = image
+    ret, image = cv2.threshold(image, 127, 255, 0)
+
+    H, W, C = image.shape
+    # Mask of non-black pixels (assuming image has a single channel).
+    mask = image > 0
+
+    # Coordinates of non-black pixels.
+    coords = np.argwhere(mask)
+
+    # Bounding box of non-black pixels.
+    x0, y0, _ = coords.min(axis=0)
+    x1, y1, _ = coords.max(axis=0) + 1  # slices are exclusive at the top
+
+    top = x0
+    right = W - y1
+    left = y0
+    bottom = H - x1
+
+    cropped = image_original[x0:x1, y0:y1]
+    cropped = cv2.copyMakeBorder(cropped, top=top, bottom=bottom, left=left, right=right, borderType=cv2.BORDER_CONSTANT,
+                               value=[255, 255, 255])
+
+    return cropped
+
+
 def pre_process(base_path, test_path, image_name):
     
     image = cv2.imread(base_path + test_path + image_name)
@@ -18,6 +46,8 @@ def pre_process(base_path, test_path, image_name):
     if height > 1100 or width > 1100:
         image = cv2.pyrDown(image)
         background_image = cv2.pyrDown(background_image)
+
+    image = crop_image_border(image)
 
     image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     cv2.imwrite(os.path.join(base_path + 'step_1_gray/', image_name), image_gray)
