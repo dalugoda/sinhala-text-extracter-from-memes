@@ -5,26 +5,10 @@ import sys, argparse
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-def get_result(image):
+def get_prediction(image):
     # classes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
     classes = np.arange(start=1, stop=229).astype(str).tolist()
 
-    letters = {
-        "1": '\u0D85',
-        "2": '\u0D86',
-        "3": '\u0D87',
-        "4": '\u0D88',
-        "5": '\u0D89',
-        "6": '\u0D8A',
-        "7": '\u0D8B',
-        "8": '\u0D8C',
-        "9": '\u0D91',
-        "10": '\u0D92',
-        "11": '\u0D94',
-        "12": '\u0D95',
-        "13": '\u0D96'
-
-    }
     # First, pass the path of the image
     image_size = 50
     num_channels = 1
@@ -32,9 +16,7 @@ def get_result(image):
 
     # Resizing the image to our desired size and preprocessing will be done exactly as done during training
     image = cv2.resize(image, (image_size, image_size), 0, 0, cv2.INTER_LINEAR)
-    # print(len(image[0]))
-    print(image.shape)
-    # image1 = image.reshape(50, 50, 1)
+
     images.append(image)
     images = np.array(images, dtype=np.uint8)
     images = images.astype('float32')
@@ -79,13 +61,13 @@ def get_result(image):
     # #print('Second Maximum probability class:', letters[str(classes[result.argmax()])])
     # second_class = letters[str(classes[result.argmax()])]
     # tf.reset_default_graph()
-    print(first_class)
+
     return first_prob, first_class
 
 
-image = cv2.imread("test/step_11_character_segment/segmented/15380494_603611959823955_4044190123010011893_n/1_0.png", 0)
-first_prob, first_class = get_result(image)
-pred = cv2.imread("cnn_dataset/"+str(first_class)+"/"+str(first_class)+"_1.jpg")
-cv2.imshow('pred', pred)
-cv2.imshow('test', image)
-cv2.waitKey(0)
+# image = cv2.imread("test/step_11_character_segment/segmented/15380494_603611959823955_4044190123010011893_n/1_0.png", 0)
+# first_prob, first_class = get_prediction(image)
+# pred = cv2.imread("cnn_dataset/"+str(first_class)+"/"+str(first_class)+"_1.jpg")
+# cv2.imshow('pred', pred)
+# cv2.imshow('test', image)
+# cv2.waitKey(0)

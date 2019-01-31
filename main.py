@@ -11,6 +11,8 @@ pre_process_path = 'step_0_faces_remove/'
 pre_processed_path = 'step_7_output/'
 line_segments_path = 'step_9_vertical_projection_filtered/segmented/'
 words_segments_path = 'step_10_word_segment/segmented/'
+character_segment_path = 'step_11_character_segment/segmented/'
+
 
 image_list = []
 for (dir_path, dir_names, file_names) in walk(base_path + test_items_path):

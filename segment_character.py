@@ -66,7 +66,7 @@ def re_segment(img):
 
     print("comp = ", no_of_components)
 
-    segments = []
+    segments = dict()
 
     for y in range(0, no_of_components):
         labeled_copy = labeled.copy()
@@ -92,18 +92,22 @@ def re_segment(img):
             elif current_value > 0 and next_value == 0:
                 cords.append(x + 1)
 
+        print(cords)
+
         H, W = labeled_copy.shape[:2]
         roi = labeled_copy[0:H, cords[0]:cords[1]]
         roi = cv2.dilate(roi.astype(np.float32), kernel, iterations=1)
         roi = 255 - roi
 
         resized = resize_character(roi)
+        segments[cords[0]] = resized
 
-        segments.append(resized)
+    sorted_segments = []
+    segments = sorted(segments.items())
+    for key, value in segments:
+        sorted_segments.append(value)
 
-        # cv2.imwrite("connected_test_cropped/im_" + str(y) + ".jpg", resized)
-
-    return segments
+    return sorted_segments
 
 
 def character_segment(base_path, character_segments_path, image_name):
@@ -131,6 +135,8 @@ def character_segment(base_path, character_segments_path, image_name):
 
     if not os.path.exists(base_path + character_segmented_path):
         os.makedirs(base_path + character_segmented_path)
+
+    # character_count = 0
 
     for i in range(len(sorted_word_list)):
 
@@ -229,7 +235,10 @@ def character_segment(base_path, character_segments_path, image_name):
                     arranged_pairs.append(pair)
             # print(arranged_pairs)
             # draw new lines
+
+            character_count = 0
             for x in range(len(arranged_pairs)):
+
                 pair = arranged_pairs[x]
                 roi = line_segment[0:H, pair[0]:pair[1]]
 
@@ -242,19 +251,21 @@ def character_segment(base_path, character_segments_path, image_name):
                     if get_re_segment_count(roi) > 1:
                         re_segmented_items = re_segment(roi)
 
-                        item_count = 1
                         for item in re_segmented_items:
+                            character_count += 1
                             cv2.imwrite(os.path.join(base_path + character_segmented_path,
-                                                     str(i) + '_' + str(x) + '_' + str(item_count) + '.' + base_image_name_array[1]), item)
-                            item_count += 1
+                                                     str(i+1) + '_' + str(character_count) + '.' + base_image_name_array[1]), item)
                     else:
                         roi = resize_character(roi)
+                        character_count += 1
                         cv2.imwrite(os.path.join(base_path + character_segmented_path,
-                                                 str(i) + '_' + str(x) + '.' + base_image_name_array[1]), roi)
+                                                 str(i+1) + '_' + str(character_count) + '.' + base_image_name_array[1]), roi)
                 else:
                     roi = resize_character(roi)
+                    character_count += 1
                     cv2.imwrite(os.path.join(base_path + character_segmented_path,
-                                         str(i) + '_' + str(x) + '.' + base_image_name_array[1]), roi)
+                                         str(i+1) + '_' + str(character_count) + '.' + base_image_name_array[1]), roi)
+
 
             # print("----------------------------------")
 
