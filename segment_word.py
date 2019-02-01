@@ -37,6 +37,7 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 
 
 def word_segment(base_path, line_segments_path, image_name):
+    print("Word Segmenting Started...")
 
     base_image_name_array = image_name.split('.')
     path = base_path + line_segments_path + base_image_name_array[0] + '/'
@@ -179,3 +180,4 @@ def word_segment(base_path, line_segments_path, image_name):
         # plt.show()
         # cv2.waitKey(0)
 
+    print("Word Segmenting Done.")

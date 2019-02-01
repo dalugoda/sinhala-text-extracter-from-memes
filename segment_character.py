@@ -64,8 +64,6 @@ def re_segment(img):
     structure = np.ones((3, 3), dtype=np.int)
     labeled, no_of_components = label(array, structure)
 
-    print("comp = ", no_of_components)
-
     segments = dict()
 
     for y in range(0, no_of_components):
@@ -92,8 +90,6 @@ def re_segment(img):
             elif current_value > 0 and next_value == 0:
                 cords.append(x + 1)
 
-        print(cords)
-
         H, W = labeled_copy.shape[:2]
         roi = labeled_copy[0:H, cords[0]:cords[1]]
         roi = cv2.dilate(roi.astype(np.float32), kernel, iterations=1)
@@ -111,7 +107,8 @@ def re_segment(img):
 
 
 def character_segment(base_path, character_segments_path, image_name):
-    print(image_name)
+    print("Character Segmenting Started...")
+
     base_image_name_array = image_name.split('.')
     path = base_path + character_segments_path + base_image_name_array[0] + '/'
 
@@ -274,3 +271,5 @@ def character_segment(base_path, character_segments_path, image_name):
             # plt.plot(line_segment_sum)
             # plt.show()
             # cv2.waitKey(0)
+
+    print("Character Segmenting Done.")

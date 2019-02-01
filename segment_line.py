@@ -38,6 +38,7 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 
 
 def line_segment(base_path, test_path, pre_processed_path, image_name):
+    print("Line Segmenting Started...")
 
     image_pre_processed = cv2.imread(base_path + pre_processed_path + image_name, 0)
     image_original = cv2.imread(base_path + test_path + image_name)
@@ -129,8 +130,9 @@ def line_segment(base_path, test_path, pre_processed_path, image_name):
             roi = image_resize(roi, height=40)
             cv2.imwrite(os.path.join(base_path + line_segmented_path, str(i) + '.' + image_name_array[1]), roi)
 
-    cv2.imshow('Segmented Image', image_original)
-    cv2.imwrite(os.path.join(base_path + line_segment_base_path + image_name), image_original)
-    cv2.waitKey(0)
+    # cv2.imshow('Segmented Image', image_original)
+    # cv2.imwrite(os.path.join(base_path + line_segment_base_path + image_name), image_original)
+    # cv2.waitKey(0)
 
+    print("Line Segmenting Done.")
 

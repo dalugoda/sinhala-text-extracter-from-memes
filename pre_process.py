@@ -32,7 +32,8 @@ def crop_image_border(image):
 
 
 def pre_process(base_path, test_path, image_name):
-    
+
+    print("Pre-processing Started...")
     image = cv2.imread(base_path + test_path + image_name)
     height, width, channels = image.shape
 
@@ -149,3 +150,5 @@ def pre_process(base_path, test_path, image_name):
     # cv2.imshow('image', image)
     # cv2.imshow('back', background_image)
     # cv2.waitKey(0)
+
+    print("Pre-processing Done")
