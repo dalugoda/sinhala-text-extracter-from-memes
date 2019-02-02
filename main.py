@@ -34,5 +34,14 @@ def read_test_dir():
         break
 
     for i in range(len(image_list)):
-        recognize_image(image_list[i])
+        run_segmentation(image_list[i])
 
+
+def run_segmentation(image_name):
+    mr.remove_meme_faces(base_path, test_items_path, image_name)
+    pp.pre_process(base_path, pre_process_path, image_name)
+    ls.line_segment(base_path, test_items_path, pre_processed_path, image_name)
+    ws.word_segment(base_path, line_segments_path, image_name)
+    cs.character_segment(base_path, words_segments_path, image_name)
+
+# read_test_dir()
