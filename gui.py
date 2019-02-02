@@ -28,6 +28,7 @@ def browse():
     global folder_path
     filename = filedialog.askopenfilename(title="Select Image", filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*")))
     folder_path.set(filename)
+    txt_file_path.delete(0, END)
     txt_file_path.insert(0, filename)
 
 
@@ -79,7 +80,7 @@ style = ttk.Style()
 style.theme_use('clam')
 style.configure("black.Horizontal.TProgressbar", background='red')
 bar = Progressbar(window, length=300, style='black.Horizontal.TProgressbar')
-bar['value'] = 70
+bar['value'] = 0
 bar.grid(column=0, row=7, sticky=W, columnspan=3, padx=5, pady=5)
 
 
@@ -87,7 +88,7 @@ lbl_category_label = Label(window, text="Category :", font=("Arial Bold", 12))
 lbl_category_label.grid(column=0, row=8, sticky=W)
 
 
-lbl_category = Label(window, text="Political", font=("Arial Bold", 12), background='yellow')
+lbl_category = Label(window, text="-", font=("Arial Bold", 12), background='yellow')
 lbl_category.grid(column=0, row=9)
 
 w = 430  # width for the Tk root

@@ -6,8 +6,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 def get_prediction(image):
-    # classes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
-    classes = np.arange(start=1, stop=229).astype(str).tolist()
+
+    classes = np.arange(start=1, stop=243).astype(str).tolist()
 
     # First, pass the path of the image
     image_size = 50
@@ -42,17 +42,15 @@ def get_prediction(image):
     # Let's feed the images to the input placeholders
     x = graph.get_tensor_by_name("x:0")
     y_true = graph.get_tensor_by_name("y_true:0")
-    y_test_images = np.zeros((100, 228))
+    y_test_images = np.zeros((100, 242))
 
     # Creating the feed_dict that is required to be fed to calculate y_pred
     feed_dict_testing = {x: x_batch, y_true: y_test_images}
     result = sess.run(y_pred, feed_dict=feed_dict_testing)
     # result is of this format [probabiliy_of_rose probability_of_sunflower]
-    # print('Maximum probability:', result.max())
-    # characters=['ං','අ','ඉ','උ','එ','ඒ']
+
     first_prob = result.max()
     # print('Maximum probability class:', letters[str(classes[result.argmax()])])
-    # first_class = letters[str(classes[result.argmax()])]
     first_class = classes[result.argmax()]
     sortArray = result[0, np.argsort(result)]
     # print('Second Maximum probability:', sortArray[0, -2])
