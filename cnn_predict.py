@@ -7,7 +7,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 def get_prediction(image):
 
-    classes = np.arange(start=1, stop=243).astype(str).tolist()
+    classes = np.arange(start=1, stop=248).astype(str).tolist()
 
     # First, pass the path of the image
     image_size = 50
@@ -42,7 +42,7 @@ def get_prediction(image):
     # Let's feed the images to the input placeholders
     x = graph.get_tensor_by_name("x:0")
     y_true = graph.get_tensor_by_name("y_true:0")
-    y_test_images = np.zeros((100, 242))
+    y_test_images = np.zeros((100, 247))
 
     # Creating the feed_dict that is required to be fed to calculate y_pred
     feed_dict_testing = {x: x_batch, y_true: y_test_images}

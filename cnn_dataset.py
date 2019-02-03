@@ -10,7 +10,7 @@ def prepare_train_data_set():
     # Convert this Image in gray scale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Now we split the image to 5000 cells, each 20x20 size
-    cells = [np.array_split(row, 100, 0) for row in np.array_split(gray, 242, 1)]
+    cells = [np.array_split(row, 100, 0) for row in np.array_split(gray, 247, 1)]
     # Make it into a Numpy array. It size will be (50,100,20,20)
     rows = np.array(cells)
 

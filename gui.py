@@ -37,6 +37,7 @@ def recognize():
     copy_file(file)
     print(file)
     img = cv2.imread(file)
+    img = cv2.pyrDown(img)
     cv2.imshow("meme", img)
     file_name = os.path.basename(file)
     sentence = main.recognize_image(file_name)

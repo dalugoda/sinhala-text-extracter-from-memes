@@ -264,6 +264,7 @@ def character_segment(base_path, character_segments_path, image_name):
                                          str(i+1) + '_' + str(character_count) + '.' + base_image_name_array[1]), roi)
 
 
+
             # print("----------------------------------")
 
             # cv2.imwrite(os.path.join(base_path + character_segmented_path + (base_image_name_array[0] + str(i) + '.' + base_image_name_array[1])), line_segment_original)

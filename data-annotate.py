@@ -4,7 +4,7 @@ import sys
 import shutil
 import time
 
-segmented_dir = 'annotate_test/segmented/meme_01'
+segmented_dir = 'annotate_test/segmented/16142986_620504001468084_1148795977560562295_n'
 data_set_dir = 'annotate_test/cnn_dataset/'
 
 character_list = []
