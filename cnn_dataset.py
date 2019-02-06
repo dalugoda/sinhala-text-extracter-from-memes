@@ -29,7 +29,7 @@ def prepare_train_data_set():
 
         for item in row:
             type_count += 1
-            ret, binarized = cv2.threshold(item, 150, 255, 0)
+            ret, binarized = cv2.threshold(item, 175, 255, 0)
             cv2.imwrite(character_path + '/' + str(letter_count) + '_' + str(type_count) + '.jpg', binarized)
             # cv2.imshow('x', item)
             # cv2.waitKey(0)
@@ -148,4 +148,4 @@ def read_train_sets(train_path, image_size, classes, validation_size):
     return data_sets
 
 
-prepare_train_data_set()
+# prepare_train_data_set()

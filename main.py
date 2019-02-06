@@ -4,6 +4,7 @@ import segment_line as ls
 import segment_word as ws
 import segment_character as cs
 import recognize as rc
+import spell_correct as sc
 from os import walk
 
 base_path = 'test/'
@@ -21,7 +22,8 @@ def recognize_image(image_name):
     ls.line_segment(base_path, test_items_path, pre_processed_path, image_name)
     ws.word_segment(base_path, line_segments_path, image_name)
     cs.character_segment(base_path, words_segments_path, image_name)
-    result = rc.predict_sentence(base_path, character_segment_path, image_name)
+    predict_sentence = rc.predict_sentence(base_path, character_segment_path, image_name)
+    result = sc.spell_correct(predict_sentence)
 
     return result
 
