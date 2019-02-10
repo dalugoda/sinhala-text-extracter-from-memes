@@ -61,11 +61,3 @@ def get_prediction(image):
     # tf.reset_default_graph()
 
     return first_prob, first_class
-
-
-# image = cv2.imread("test/step_11_character_segment/segmented/15380494_603611959823955_4044190123010011893_n/1_0.png", 0)
-# first_prob, first_class = get_prediction(image)
-# pred = cv2.imread("cnn_dataset/"+str(first_class)+"/"+str(first_class)+"_1.jpg")
-# cv2.imshow('pred', pred)
-# cv2.imshow('test', image)
-# cv2.waitKey(0)

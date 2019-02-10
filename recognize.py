@@ -60,7 +60,6 @@ def predict_sentence(base_path, character_segments_path, image_name):
                 predict_label = label_mapper[int(first_class) - 1]
                 # print(predict_label)
 
-
                 predictions.append(predict_label)
 
                 probabilities.append([str(word) + '_' + str(char), first_prob, first_class, predict_label])

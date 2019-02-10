@@ -100,3 +100,12 @@ def spell_correct(sentence):
     print("Process Completed !")
     return " ".join(output)
 
+
+def test_permutations():
+    word = "ගංගාව"
+    char_groups = get_character_groups()
+    permutations = generate_permutations(char_groups, word, 0)
+    print(permutations)
+
+
+# test_permutations()
