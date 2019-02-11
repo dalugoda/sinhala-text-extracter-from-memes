@@ -7,6 +7,7 @@ import main
 import cv2
 import os
 import shutil
+import analyze as an
 
 
 def copy_file(source):
@@ -47,7 +48,13 @@ def recognize():
 
 
 def analyze():
-    print("Analyze Clicked !")
+    sentence = txt_sentence.get('1.0', END)
+    hate_label, hate_rate, category = an.analyse(sentence)
+
+    print(hate_label, hate_rate, category)
+    bar['value'] = round(float(hate_rate), 2) * 100
+    lbl_category.config(text=category)
+
 
 
 window = Tk()
