@@ -1,6 +1,6 @@
 # Sinhala Text Extractor from Facebook Memes.
 
-Final Year Research Project [145078v/UoM/FIT]
+Final Year Research Project
 
 **Limitations**
 - Text area of the image should be in white background
@@ -13,3 +13,6 @@ Final Year Research Project [145078v/UoM/FIT]
 2.  Character Segmentation module
 3.  Character Recognition module
 4.  Basic spell-correction (Post-processing) module
+
+**Demo**
+https://www.youtube.com/watch?v=9tDVcUnKiZs
